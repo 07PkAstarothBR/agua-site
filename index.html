@@ -1,253 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Água Pura Premium</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background: linear-gradient(135deg,#0a192f,#001f3f,#003f5c);
-color:white;
-overflow-x:hidden;
-}
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:25px 8%;
-background: rgba(255,255,255,0.05);
-backdrop-filter: blur(15px);
-}
-
-.logo{
-font-weight:800;
-font-size:20px;
-}
-
-nav a{
-margin-left:20px;
-text-decoration:none;
-color:white;
-font-size:14px;
-transition:0.3s;
-}
-
-nav a:hover{
-color:#00eaff;
-}
-
-.hero{
-display:flex;
-flex-wrap:wrap;
-align-items:center;
-justify-content:space-between;
-padding:100px 8%;
-}
-
-.text{
-max-width:600px;
-}
-
-.text h1{
-font-size:55px;
-font-weight:900;
-margin-bottom:25px;
-background: linear-gradient(90deg,#ffffff,#00eaff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.text p{
-font-size:18px;
-line-height:1.7;
-margin-bottom:40px;
-color:#dff9ff;
-}
-
-.buttons button{
-padding:14px 35px;
-border:none;
-border-radius:40px;
-margin-right:15px;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
-}
-
-.btn1{
-background:white;
-color:#003f5c;
-}
-
-.btn1:hover{
-background:#00eaff;
-color:white;
-transform:scale(1.08);
-box-shadow:0 0 20px #00eaff;
-}
-
-.btn2{
-background:rgba(255,255,255,0.1);
-border:1px solid rgba(255,255,255,0.3);
-color:white;
-}
-
-.btn2:hover{
-background:white;
-color:#003f5c;
-transform:scale(1.08);
-}
-
-.image img{
-width:420px;
-filter: drop-shadow(0px 40px 80px rgba(0,0,0,0.6));
-animation:float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0px);}
-50%{transform:translateY(-20px);}
-100%{transform:translateY(0px);}
-}
-
-/* AVALIAÇÕES */
-.reviews{
-padding:80px 8%;
-text-align:center;
-}
-
-.reviews h2{
-font-size:38px;
-margin-bottom:50px;
-background: linear-gradient(90deg,#00eaff,#ffffff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.review-cards{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:30px;
-}
-
-.card{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
-padding:30px;
-border-radius:20px;
-width:300px;
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 30px rgba(0,234,255,0.3);
-}
-
-.stars{
-color:#ffd700;
-font-size:18px;
-margin-bottom:15px;
-}
-
-.card p{
-font-size:14px;
-color:#e6faff;
-margin-bottom:10px;
-}
-
-.card h4{
-font-size:14px;
-font-weight:600;
-}
-
-/* RESPONSIVO */
-@media(max-width:900px){
-.hero{
-flex-direction:column;
-text-align:center;
-}
-
-.image img{
-width:300px;
-margin-top:40px;
-}
-
-.text h1{
-font-size:40px;
-}
-}
-</style>
+<title>Teste Cadastro</title>
 </head>
+<body style="background:#111;color:white;text-align:center;margin-top:100px;">
 
-<body>
+<h2>Teste de Cadastro 🔥</h2>
 
-<header>
-<div class="logo">💧 Água Pura Premium</div>
-<nav>
-<a href="#">Home</a>
-<a href="#">Qualidade</a>
-<a href="#">Sobre</a>
-<a href="#">Contato</a>
-</nav>
-</header>
+<input id="nome" placeholder="Digite seu nome"><br><br>
+<input id="email" placeholder="Digite seu email"><br><br>
 
-<section class="hero">
-<div class="text">
-<h1>Água Mineral 20L Premium</h1>
-<p>
-Distribuição profissional de galões lacrados com entrega rápida em Itaboraí.
-Pureza certificada, confiança total e experiência premium desde o primeiro pedido.
-</p>
+<button onclick="cadastrar()">Cadastrar</button>
 
-<div class="buttons">
-<button class="btn1" onclick="window.location.href='login.html'">Entrar</button>
-<button class="btn2" onclick="window.location.href='cadastro.html'">Criar Conta</button>
-</div>
-</div>
+<script>
+function cadastrar(){
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email").value;
 
-<div class="image">
-<img src="galao.png" alt="Galão 20L">
-</div>
-</section>
+  if(!nome || !email){
+    alert("Preencha tudo!");
+    return;
+  }
 
-<section class="reviews">
-<h2>O Que Nossos Clientes Dizem</h2>
-
-<div class="review-cards">
-
-<div class="card">
-<div class="stars">★★★★★</div>
-<p>Entrega em menos de 20 minutos! Atendimento impecável.</p>
-<h4>- Carlos M.</h4>
-</div>
-
-<div class="card">
-<div class="stars">★★★★★</div>
-<p>Melhor água de Itaboraí. Galão sempre lacrado e limpo.</p>
-<h4>- Fernanda R.</h4>
-</div>
-
-<div class="card">
-<div class="stars">★★★★★</div>
-<p>Site fácil de usar e entrega super rápida. Recomendo demais.</p>
-<h4>- João P.</h4>
-</div>
-
-</div>
-</section>
+  alert("Funcionando 🔥 Nome: " + nome + " Email: " + email);
+}
+</script>
 
 </body>
 </html>
