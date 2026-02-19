@@ -9,172 +9,216 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins', sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    height:100vh;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    overflow:hidden;
+min-height:100vh;
+background: linear-gradient(135deg,#0a192f,#0f3057,#00587a);
+color:white;
+overflow-x:hidden;
+position:relative;
 }
 
-/* EFEITO LUZ INSANO */
-.background-glow{
-    position:absolute;
-    width:700px;
-    height:700px;
-    background: radial-gradient(circle, rgba(0,225,255,0.4) 0%, transparent 70%);
-    top:20%;
-    right:10%;
-    filter: blur(120px);
-    z-index:-1;
-    animation: pulse 6s infinite alternate;
+/* PARTÍCULAS */
+body::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+background-size:40px 40px;
+animation: moveBg 20s linear infinite;
+z-index:-2;
+}
+
+@keyframes moveBg{
+0%{ background-position:0 0; }
+100%{ background-position:200px 200px; }
+}
+
+/* GLOW */
+.glow{
+position:absolute;
+width:600px;
+height:600px;
+background: radial-gradient(circle, rgba(0,200,255,0.4) 0%, transparent 70%);
+top:20%;
+right:10%;
+filter:blur(120px);
+z-index:-1;
+animation:pulse 6s infinite alternate;
 }
 
 @keyframes pulse{
-    from{ transform:scale(1); }
-    to{ transform:scale(1.2); }
+from{transform:scale(1);}
+to{transform:scale(1.2);}
 }
 
 header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:25px 60px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 8%;
+backdrop-filter: blur(10px);
+background: rgba(255,255,255,0.05);
+border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 .logo{
-    font-size:26px;
-    font-weight:800;
+font-size:22px;
+font-weight:800;
 }
 
 nav a{
-    margin-left:30px;
-    text-decoration:none;
-    color:white;
-    font-size:15px;
-    transition:0.3s;
+margin-left:25px;
+text-decoration:none;
+color:white;
+font-size:14px;
+transition:0.3s;
 }
 
 nav a:hover{
-    color:#00e0ff;
+color:#00eaff;
 }
 
 .container{
-    height:80vh;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 80px;
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+justify-content:space-between;
+padding:80px 8%;
 }
 
 .text-area{
-    max-width:650px;
+max-width:600px;
 }
 
 .text-area h1{
-    font-size:70px;
-    font-weight:900;
-    line-height:1.1;
-    margin-bottom:25px;
-    background: linear-gradient(90deg,#ffffff,#00e0ff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+font-size:60px;
+font-weight:900;
+line-height:1.1;
+margin-bottom:25px;
+background: linear-gradient(90deg,#ffffff,#00eaff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .text-area p{
-    font-size:22px;
-    line-height:1.6;
-    margin-bottom:40px;
-    color:#e0f7ff;
+font-size:18px;
+line-height:1.7;
+margin-bottom:40px;
+color:#dff9ff;
 }
 
 .buttons button{
-    padding:15px 45px;
-    border:none;
-    border-radius:40px;
-    margin-right:20px;
-    font-size:17px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.4s;
+padding:14px 38px;
+border:none;
+border-radius:50px;
+margin-right:15px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
 }
 
 .btn-login{
-    background:white;
-    color:#203a43;
+background:white;
+color:#00587a;
 }
 
 .btn-login:hover{
-    background:#00e0ff;
-    color:white;
-    transform:scale(1.08);
+background:#00eaff;
+color:white;
+transform:scale(1.08);
 }
 
 .btn-cadastro{
-    background:transparent;
-    border:2px solid white;
-    color:white;
+background:rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.3);
+color:white;
+backdrop-filter:blur(10px);
 }
 
 .btn-cadastro:hover{
-    background:white;
-    color:#203a43;
-    transform:scale(1.08);
+background:white;
+color:#00587a;
+transform:scale(1.08);
+}
+
+.image-area{
+flex:1;
+display:flex;
+justify-content:center;
 }
 
 .image-area img{
-    width:550px;
-    animation: float 4s ease-in-out infinite;
-    filter: drop-shadow(0px 40px 80px rgba(0,0,0,0.6));
+width:480px;
+animation:float 4s ease-in-out infinite;
+filter: drop-shadow(0px 40px 80px rgba(0,0,0,0.6));
 }
 
 @keyframes float{
-    0%{ transform:translateY(0px); }
-    50%{ transform:translateY(-25px); }
-    100%{ transform:translateY(0px); }
+0%{transform:translateY(0px);}
+50%{transform:translateY(-20px);}
+100%{transform:translateY(0px);}
+}
+
+/* RESPONSIVO */
+@media(max-width:900px){
+.container{
+flex-direction:column;
+text-align:center;
+}
+
+.image-area img{
+width:350px;
+margin-top:40px;
+}
+
+.text-area h1{
+font-size:42px;
+}
 }
 </style>
 </head>
 
 <body>
 
-<div class="background-glow"></div>
+<div class="glow"></div>
 
 <header>
-    <div class="logo">💧 Água Pura Premium</div>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Sobre</a>
-        <a href="#">Qualidade</a>
-        <a href="#">Contato</a>
-    </nav>
+<div class="logo">💧 Água Pura Premium</div>
+<nav>
+<a href="#">Home</a>
+<a href="#">Qualidade</a>
+<a href="#">Sobre</a>
+<a href="#">Contato</a>
+</nav>
 </header>
 
-<div class="container">
-    <div class="text-area">
-        <h1>Água Mineral<br>Premium 20L</h1>
-        <p>
-            Pureza extrema, qualidade certificada e entrega rápida diretamente na sua casa.
-            Trabalhamos apenas com galões lacrados e testados.
-            Saúde, confiança e excelência em cada gota.
-            Experimente o padrão mais alto de hidratação.
-        </p>
+<section class="container">
+<div class="text-area">
+<h1>Domine sua<br>Hidratação</h1>
+<p>
+Água mineral 100% pura, galões lacrados de 20L e entrega rápida em Itaboraí.
+Qualidade certificada, confiança garantida e experiência premium desde o primeiro clique.
+Eleve seu padrão de consumo.
+</p>
 
-        <div class="buttons">
-            <button class="btn-login">Entrar</button>
-            <button class="btn-cadastro">Criar Conta</button>
-        </div>
-    </div>
-
-    <div class="image-area">
-        <img src="https://images.unsplash.com/photo-1604186838309-c671f94e6b41?auto=format&fit=crop&w=800&q=80" alt="Galão de Água 20L">
-    </div>
+<div class="buttons">
+<button class="btn-login">Entrar</button>
+<button class="btn-cadastro">Criar Conta</button>
 </div>
+</div>
+
+<div class="image-area">
+<img src="https://images.unsplash.com/photo-1616118132534-381148898bb4?auto=format&fit=crop&w=800&q=80" alt="Galão de Água 20L">
+</div>
+</section>
 
 </body>
 </html>
