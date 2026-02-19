@@ -1,79 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Água Marambaia - Itaboraí RJ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body{
-      font-family: Arial, sans-serif;
-      background: #e6f7ff;
-      margin:0;
-      padding:0;
-      text-align:center;
-    }
-    header{
-      background:#0099ff;
-      color:white;
-      padding:15px;
-      font-size:20px;
-    }
-    .container{
-      padding:20px;
-    }
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:10px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
-      margin:20px auto;
-      max-width:350px;
-    }
-    button{
-      background:#0099ff;
-      color:white;
-      border:none;
-      padding:10px 20px;
-      border-radius:5px;
-      cursor:pointer;
-      margin-top:10px;
-    }
-    button:hover{
-      background:#007acc;
-    }
-    input{
-      padding:8px;
-      width:80%;
-      margin-top:10px;
-    }
-    #codigo{
-      font-size:18px;
-      font-weight:bold;
-      margin-top:10px;
-      color:green;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Água Marambaia</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg, #0077ff, #00c6ff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card{
+  background:white;
+  width:90%;
+  max-width:400px;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+  text-align:center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+h1{
+  color:#0077ff;
+  margin-bottom:10px;
+}
+
+.preco{
+  font-size:22px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.estoque{
+  margin-bottom:15px;
+  color:gray;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-bottom:15px;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#0077ff;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#005ec4;
+}
+
+.codigo{
+  margin-top:15px;
+  font-weight:bold;
+  color:green;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  Água Marambaia - Itaboraí RJ
-</header>
+<div class="card">
+  <h1>Água Marambaia</h1>
+  <p class="preco">Galão 20L - R$ 15,00</p>
+  <p class="estoque">Estoque: <span id="estoque">100</span></p>
 
-<div class="container">
+  <input type="number" id="quantidade" placeholder="Digite a quantidade" min="1" max="100">
 
-  <div class="card">
-    <h2>Galão de Água</h2>
-    <p>Preço: R$ 15,00</p>
-    <p>Estoque: <span id="estoque">100</span></p>
+  <button onclick="comprar()">Comprar Agora</button>
 
-    <input type="number" id="quantidade" placeholder="Quantidade" min="1" max="100">
-    <br>
-    <button onclick="comprar()">Comprar</button>
-
-    <div id="codigo"></div>
-  </div>
-
+  <div class="codigo" id="codigo"></div>
 </div>
 
 <script>
@@ -107,7 +131,7 @@ function comprar(){
 
   const codigo = gerarCodigo();
   document.getElementById("codigo").innerHTML =
-    "Código para entrega: " + codigo;
+    "Código de Entrega: " + codigo;
 
   alert("Compra realizada com sucesso!");
 }
