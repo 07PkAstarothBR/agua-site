@@ -3,140 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Água Marambaia</title>
+<title>Água Pura Delivery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: Arial, sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
 }
 
 body{
-  background: linear-gradient(135deg, #0077ff, #00c6ff);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+    height:100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color:white;
+    display:flex;
+    flex-direction:column;
 }
 
-.card{
-  background:white;
-  width:90%;
-  max-width:400px;
-  padding:25px;
-  border-radius:20px;
-  box-shadow:0 15px 35px rgba(0,0,0,0.2);
-  text-align:center;
-  animation: fadeIn 0.5s ease-in-out;
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
 }
 
-h1{
-  color:#0077ff;
-  margin-bottom:10px;
+.logo{
+    font-size:22px;
+    font-weight:700;
 }
 
-.preco{
-  font-size:22px;
-  font-weight:bold;
-  margin:10px 0;
+nav a{
+    margin-left:25px;
+    text-decoration:none;
+    color:white;
+    font-weight:400;
+    transition:0.3s;
 }
 
-.estoque{
-  margin-bottom:15px;
-  color:gray;
+nav a:hover{
+    color:#00d4ff;
 }
 
-input{
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  margin-bottom:15px;
-  font-size:16px;
+.container{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 60px;
 }
 
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:#0077ff;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
+.text-area{
+    max-width:500px;
 }
 
-button:hover{
-  background:#005ec4;
+.text-area h1{
+    font-size:48px;
+    font-weight:800;
+    margin-bottom:20px;
 }
 
-.codigo{
-  margin-top:15px;
-  font-weight:bold;
-  color:green;
+.text-area p{
+    font-size:16px;
+    opacity:0.9;
+    margin-bottom:30px;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+.buttons button{
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    margin-right:15px;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-login{
+    background:white;
+    color:#203a43;
+    font-weight:600;
+}
+
+.btn-login:hover{
+    background:#00d4ff;
+    color:white;
+}
+
+.btn-cadastro{
+    background:transparent;
+    border:2px solid white;
+    color:white;
+}
+
+.btn-cadastro:hover{
+    background:white;
+    color:#203a43;
+}
+
+.image-area img{
+    width:420px;
+    filter: drop-shadow(0px 20px 40px rgba(0,0,0,0.6));
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Água Marambaia</h1>
-  <p class="preco">Galão 20L - R$ 15,00</p>
-  <p class="estoque">Estoque: <span id="estoque">100</span></p>
+<header>
+    <div class="logo">💧 Água Pura</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+        <a href="#">Entrar</a>
+    </nav>
+</header>
 
-  <input type="number" id="quantidade" placeholder="Digite a quantidade" min="1" max="100">
+<div class="container">
+    <div class="text-area">
+        <h1>Água Mineral Premium</h1>
+        <p>
+            Pureza, qualidade e entrega rápida na sua casa.
+            Trabalhamos com galões 20L lacrados e certificados.
+            Saúde e confiança para você e sua família.
+        </p>
 
-  <button onclick="comprar()">Comprar Agora</button>
+        <div class="buttons">
+            <button class="btn-login">Login</button>
+            <button class="btn-cadastro">Cadastrar</button>
+        </div>
+    </div>
 
-  <div class="codigo" id="codigo"></div>
+    <div class="image-area">
+        <img src="https://images.unsplash.com/photo-1606813909027-7f0e5d42c5df" alt="Galão de Água">
+    </div>
 </div>
-
-<script>
-
-let estoque = 100;
-
-function gerarCodigo(){
-  const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let codigo = "";
-  for(let i=0;i<8;i++){
-    codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-  }
-  return codigo;
-}
-
-function comprar(){
-  const quantidade = parseInt(document.getElementById("quantidade").value);
-
-  if(!quantidade || quantidade <= 0){
-    alert("Digite uma quantidade válida");
-    return;
-  }
-
-  if(quantidade > estoque){
-    alert("Estoque insuficiente");
-    return;
-  }
-
-  estoque -= quantidade;
-  document.getElementById("estoque").innerText = estoque;
-
-  const codigo = gerarCodigo();
-  document.getElementById("codigo").innerHTML =
-    "Código de Entrega: " + codigo;
-
-  alert("Compra realizada com sucesso!");
-}
-
-</script>
 
 </body>
 </html>
