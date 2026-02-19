@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Água Marambaia - Itaboraí RJ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background: #e6f7ff;
+      margin:0;
+      padding:0;
+      text-align:center;
+    }
+    header{
+      background:#0099ff;
+      color:white;
+      padding:15px;
+      font-size:20px;
+    }
+    .container{
+      padding:20px;
+    }
+    .card{
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      margin:20px auto;
+      max-width:350px;
+    }
+    button{
+      background:#0099ff;
+      color:white;
+      border:none;
+      padding:10px 20px;
+      border-radius:5px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+    button:hover{
+      background:#007acc;
+    }
+    input{
+      padding:8px;
+      width:80%;
+      margin-top:10px;
+    }
+    #codigo{
+      font-size:18px;
+      font-weight:bold;
+      margin-top:10px;
+      color:green;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Água Marambaia - Itaboraí RJ
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Galão de Água</h2>
+    <p>Preço: R$ 15,00</p>
+    <p>Estoque: <span id="estoque">100</span></p>
+
+    <input type="number" id="quantidade" placeholder="Quantidade" min="1" max="100">
+    <br>
+    <button onclick="comprar()">Comprar</button>
+
+    <div id="codigo"></div>
+  </div>
+
+</div>
+
+<script>
+
+let estoque = 100;
+
+function gerarCodigo(){
+  const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let codigo = "";
+  for(let i=0;i<8;i++){
+    codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+  }
+  return codigo;
+}
+
+function comprar(){
+  const quantidade = parseInt(document.getElementById("quantidade").value);
+
+  if(!quantidade || quantidade <= 0){
+    alert("Digite uma quantidade válida");
+    return;
+  }
+
+  if(quantidade > estoque){
+    alert("Estoque insuficiente");
+    return;
+  }
+
+  estoque -= quantidade;
+  document.getElementById("estoque").innerText = estoque;
+
+  const codigo = gerarCodigo();
+  document.getElementById("codigo").innerHTML =
+    "Código para entrega: " + codigo;
+
+  alert("Compra realizada com sucesso!");
+}
+
+</script>
+
+</body>
+</html>
