@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Água Pura Delivery</title>
+<title>Água Pura Premium</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -19,76 +19,83 @@ body{
     height:100vh;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color:white;
-    display:flex;
-    flex-direction:column;
+    overflow:hidden;
 }
 
 header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:20px 60px;
+    padding:25px 60px;
 }
 
 .logo{
-    font-size:22px;
-    font-weight:700;
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:1px;
 }
 
 nav a{
-    margin-left:25px;
+    margin-left:30px;
     text-decoration:none;
     color:white;
     font-weight:400;
+    font-size:15px;
     transition:0.3s;
 }
 
 nav a:hover{
-    color:#00d4ff;
+    color:#00e0ff;
 }
 
 .container{
-    flex:1;
+    height:80vh;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 60px;
+    padding:0 80px;
 }
 
 .text-area{
-    max-width:500px;
+    max-width:650px;
 }
 
 .text-area h1{
-    font-size:48px;
-    font-weight:800;
-    margin-bottom:20px;
+    font-size:64px;
+    font-weight:900;
+    line-height:1.1;
+    margin-bottom:25px;
+    background: linear-gradient(90deg, #ffffff, #00e0ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
 .text-area p{
-    font-size:16px;
-    opacity:0.9;
-    margin-bottom:30px;
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:40px;
+    color:#e0f7ff;
 }
 
 .buttons button{
-    padding:12px 28px;
+    padding:15px 40px;
     border:none;
-    border-radius:30px;
-    margin-right:15px;
-    font-size:14px;
+    border-radius:40px;
+    margin-right:20px;
+    font-size:16px;
+    font-weight:600;
     cursor:pointer;
-    transition:0.3s;
+    transition:0.4s;
 }
 
 .btn-login{
     background:white;
     color:#203a43;
-    font-weight:600;
 }
 
 .btn-login:hover{
-    background:#00d4ff;
+    transform:scale(1.05);
+    background:#00e0ff;
     color:white;
 }
 
@@ -101,44 +108,66 @@ nav a:hover{
 .btn-cadastro:hover{
     background:white;
     color:#203a43;
+    transform:scale(1.05);
 }
 
 .image-area img{
-    width:420px;
-    filter: drop-shadow(0px 20px 40px rgba(0,0,0,0.6));
+    width:500px;
+    animation:float 4s ease-in-out infinite;
+    filter: drop-shadow(0px 30px 60px rgba(0,0,0,0.6));
+}
+
+@keyframes float{
+    0%{ transform:translateY(0px); }
+    50%{ transform:translateY(-20px); }
+    100%{ transform:translateY(0px); }
+}
+
+.glow{
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(0,224,255,0.3) 0%, transparent 70%);
+    top:20%;
+    right:10%;
+    filter:blur(80px);
+    z-index:-1;
 }
 </style>
 </head>
 
 <body>
 
+<div class="glow"></div>
+
 <header>
-    <div class="logo">💧 Água Pura</div>
+    <div class="logo">💧 Água Pura Premium</div>
     <nav>
         <a href="#">Home</a>
         <a href="#">Sobre</a>
+        <a href="#">Qualidade</a>
         <a href="#">Contato</a>
-        <a href="#">Entrar</a>
     </nav>
 </header>
 
 <div class="container">
     <div class="text-area">
-        <h1>Água Mineral Premium</h1>
+        <h1>Hidratação no<br>Mais Alto Nível</h1>
         <p>
-            Pureza, qualidade e entrega rápida na sua casa.
-            Trabalhamos com galões 20L lacrados e certificados.
-            Saúde e confiança para você e sua família.
+            Trabalhamos com água mineral 100% pura, extraída de fontes certificadas,
+            passando por rigorosos testes de qualidade.
+            Entregamos galões lacrados de 20L com rapidez, segurança e confiança.
+            Sua saúde merece excelência.
         </p>
 
         <div class="buttons">
-            <button class="btn-login">Login</button>
-            <button class="btn-cadastro">Cadastrar</button>
+            <button class="btn-login">Entrar</button>
+            <button class="btn-cadastro">Criar Conta</button>
         </div>
     </div>
 
     <div class="image-area">
-        <img src="https://images.unsplash.com/photo-1606813909027-7f0e5d42c5df" alt="Galão de Água">
+        <img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" alt="Galão de Água">
     </div>
 </div>
 
