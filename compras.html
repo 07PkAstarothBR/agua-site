@@ -32,20 +32,7 @@
     return Math.floor(1000000 + Math.random() * 9000000).toString();
   }
 
-  async function salvarPedido(dados) {
-    const { error } = await supabase
-      .from("pedidos")
-      .insert([dados]);
-
-    if (error) {
-      console.error("Erro ao salvar:", error);
-      alert("Erro ao salvar pedido ❌");
-    } else {
-      alert("Pedido salvo com sucesso ✅");
-    }
-  }
-
-  async function confirmarPedido(tipoPagamento, valorFinal) {
+  async function finalizarCompra(tipoPagamento, valorFinal) {
 
     const codigo = gerarCodigoPedido();
 
@@ -59,7 +46,16 @@
       criado_em: new Date()
     };
 
-    await salvarPedido(pedido);
+    const { error } = await supabase
+      .from("pedidos")
+      .insert([pedido]);
+
+    if (error) {
+      console.error(error);
+      alert("Erro ao salvar pedido ❌");
+    } else {
+      alert("Pedido salvo com sucesso ✅ Código: " + codigo);
+    }
   }
 </script>
 
