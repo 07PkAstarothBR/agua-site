@@ -19,10 +19,7 @@
   const SUPABASE_URL = "https://ttqetzagmjsjiibchsqo.supabase.co";
   const SUPABASE_KEY = "sb_publishable_SxV6az0prQtpuyP4VdstkQ_nP38A3rw";
 
-  const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   /* =========================
      FUNÇÕES GLOBAIS (pedido)
