@@ -12,13 +12,55 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+  /* =========================
+     CONFIGURAÇÃO SUPABASE
+  ========================== */
+
   const SUPABASE_URL = "https://ttqetzagmjsjiibchsqo.supabase.co";
   const SUPABASE_KEY = "sb_publishable_SxV6az0prQtpuyP4VdstkQ_nP38A3rw";
 
-  window.supabaseClient = window.supabase.createClient(
+  const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
+
+  /* =========================
+     FUNÇÕES DO PEDIDO
+  ========================== */
+
+  function gerarCodigoPedido() {
+    return Math.floor(1000000 + Math.random() * 9000000).toString();
+  }
+
+  async function salvarPedido(dados) {
+    const { error } = await supabase
+      .from("pedidos")
+      .insert([dados]);
+
+    if (error) {
+      console.error("Erro ao salvar:", error);
+      alert("Erro ao salvar pedido ❌");
+    } else {
+      alert("Pedido salvo com sucesso ✅");
+    }
+  }
+
+  async function confirmarPedido(tipoPagamento, valorFinal) {
+
+    const codigo = gerarCodigoPedido();
+
+    const pedido = {
+      codigo: codigo,
+      produto: "Galão Água Pura Premium 20L",
+      quantidade: window.quantidadeSelecionada || 1,
+      valor: valorFinal,
+      pagamento: tipoPagamento,
+      status: "confirmado",
+      criado_em: new Date()
+    };
+
+    await salvarPedido(pedido);
+  }
 </script>
 
 <style>
