@@ -1,5 +1,5 @@
-<!DOCTYPE html>  
-<html lang="pt-br">  
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -25,37 +25,54 @@
   );
 
   /* =========================
-     FUNÇÕES DO PEDIDO
+     FUNÇÕES GLOBAIS (pedido)
   ========================== */
 
   function gerarCodigoPedido() {
     return Math.floor(1000000 + Math.random() * 9000000).toString();
   }
 
+  // finaliza e salva no Supabase usando os nomes de coluna que você criou
   async function finalizarCompra(tipoPagamento, valorFinal) {
 
-    const codigo = gerarCodigoPedido();
+    // usa orderId já gerado se houver (consistência visual), senão cria novo
+    const codigo = (window.orderId && String(window.orderId)) || gerarCodigoPedido();
+
+    const qty = parseInt(document.getElementById('qty')?.value || window.quantidadeSelecionada || 1, 10);
 
     const pedido = {
-      codigo: codigo,
+      codigo_pedido: codigo,
       produto: "Galão Água Pura Premium 20L",
-      quantidade: window.quantidadeSelecionada || 1,
-      valor: valorFinal,
-      pagamento: tipoPagamento,
-      status: "confirmado",
-      criado_em: new Date()
+      quantidade: qty,
+      valor_total: valorFinal,
+      forma_pagamento: tipoPagamento,
+      criado_em: new Date().toISOString()
     };
 
-    const { error } = await supabase
-      .from("pedidos")
+    // fecha o sheet se estiver aberto
+    try {
+      const overlay = document.getElementById('overlay');
+      if (overlay) overlay.style.display = 'none';
+    } catch (e) {}
+
+    // inserção no supabase
+    const { data, error } = await supabase
+      .from('pedidos')
       .insert([pedido]);
 
     if (error) {
-      console.error(error);
-      alert("Erro ao salvar pedido ❌");
-    } else {
-      alert("Pedido salvo com sucesso ✅ Código: " + codigo);
+      console.error("Erro ao salvar pedido:", error);
+      alert("Erro ao salvar pedido ❌ - veja console");
+      return false;
     }
+
+    // sucesso
+    alert("Pedido salvo com sucesso ✅ Código: " + codigo);
+    // atualiza campo de código visual, se existir
+    const codeEl = document.getElementById('orderCode');
+    if (codeEl) codeEl.innerText = "Código do Pedido: " + codigo;
+
+    return true;
   }
 </script>
 
@@ -417,9 +434,11 @@
   let currentPayment = null;
   const unitPrice = 22.90;
   let orderId = null;
+  window.orderId = null;
+  window.quantidadeSelecionada = 1;
 
   function generateOrderId(){
-    return Math.floor(1000000 + Math.random() * 9000000); // 7-digit
+    return Math.floor(1000000 + Math.random() * 9000000);
   }
 
   function formatBRL(value){
@@ -442,12 +461,16 @@
 
     totalText.innerText = formatBRL(total);
     summary.style.display = 'block';
-    codeText.innerText = "Código do Pedido: " + orderId;
+    codeText.innerText = "Código do Pedido: " + (window.orderId || '');
   }
 
   function selectProduct(){
     productSelected = true;
     orderId = generateOrderId();
+    window.orderId = orderId;
+
+    // update quantidade selecionada from input
+    window.quantidadeSelecionada = parseInt(document.getElementById('qty').value || 1, 10);
 
     updateSummary();
 
@@ -458,6 +481,8 @@
   }
 
   function qtyChanged(){
+    // update selected quantity
+    window.quantidadeSelecionada = parseInt(document.getElementById('qty').value || 1, 10);
     if(productSelected){
       updateSummary();
     }
@@ -479,6 +504,17 @@
     document.getElementById('paymentArea').innerHTML = '';
   }
 
+  // handlers that call finalizarCompra defined in head
+  async function handleDebitConfirm(){
+    const total = calculateTotal(false);
+    await finalizarCompra('debito', total);
+  }
+
+  async function handleCreditConfirm(){
+    const total = calculateTotal(true);
+    await finalizarCompra('credito', total);
+  }
+
   function selectPayment(type){
     currentPayment = type;
     const area = document.getElementById('paymentArea');
@@ -493,10 +529,17 @@
           <div style="font-size:20px;margin-top:6px">${formatBRL(total)}</div>
           <div style="margin-top:12px">Chave Pix:</div>
           <div style="font-size:18px;margin-top:6px">202.978.417-69</div>
-          <div style="margin-top:10px;font-size:13px">Pedido: ${orderId}</div>
+          <div style="margin-top:10px;font-size:13px">Pedido: ${window.orderId || ''}</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+            <button class="copy-btn" onclick="copyPix()">Copiar Chave Pix</button>
+            <button class="copy-btn" onclick="finalizarCompra('pix', ${total})">Simular pago (PIX)</button>
+          </div>
         </div>
       `;
-    } else if(type === 'debit'){
+      return;
+    }
+
+    if(type === 'debit'){
       const total = calculateTotal(false);
 
       area.innerHTML = `
@@ -504,18 +547,21 @@
           Total a pagar: ${formatBRL(total)}
         </div>
         <div class="card-form">
-          <input placeholder="Número do cartão">
-          <input placeholder="Nome do titular">
+          <input placeholder="Número do cartão" id="debit_card_number">
+          <input placeholder="Nome do titular" id="debit_card_name">
           <div style="display:flex;gap:8px;">
-            <input placeholder="MM/AA" style="flex:1">
-            <input placeholder="CVC" style="width:110px">
+            <input placeholder="MM/AA" style="flex:1" id="debit_card_exp">
+            <input placeholder="CVC" style="width:110px" id="debit_card_cvc">
           </div>
           <div style="margin-top:10px;display:flex;gap:8px;">
-            <button style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700" onclick="simulateDebitPay()">Confirmar Pagamento</button>
+            <button style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700" onclick="handleDebitConfirm()">Confirmar Pagamento</button>
           </div>
         </div>
       `;
-    } else if(type === 'credit'){
+      return;
+    }
+
+    if(type === 'credit'){
       const total = calculateTotal(true);
 
       area.innerHTML = `
@@ -523,32 +569,21 @@
         <div style="margin-bottom:10px;font-weight:700;color:#dff9ff;">
           Total com taxa: ${formatBRL(total)}
         </div>
-        <div style="font-size:13px;margin-bottom:10px;">Pedido: ${orderId}</div>
+        <div style="font-size:13px;margin-bottom:10px;">Pedido: ${window.orderId || ''}</div>
         <div class="card-form">
-          <input placeholder="Número do cartão">
-          <input placeholder="Nome do titular">
+          <input placeholder="Número do cartão" id="credit_card_number">
+          <input placeholder="Nome do titular" id="credit_card_name">
           <div style="display:flex;gap:8px;">
-            <input placeholder="MM/AA" style="flex:1">
-            <input placeholder="CVC" style="width:110px">
+            <input placeholder="MM/AA" style="flex:1" id="credit_card_exp">
+            <input placeholder="CVC" style="width:110px" id="credit_card_cvc">
           </div>
           <div style="margin-top:10px;display:flex;gap:8px;">
-            <button style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700" onclick="simulateCreditPay()">Confirmar Pagamento</button>
+            <button style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700" onclick="handleCreditConfirm()">Confirmar Pagamento</button>
           </div>
         </div>
       `;
+      return;
     }
-  }
-
-  function simulateCreditPay(){
-    alert('Pagamento simulado (crédito) recebido.\nPedido: ' + orderId);
-    closeSheet();
-    showConfirmation();
-  }
-
-  function simulateDebitPay(){
-    alert('Pagamento simulado (débito) recebido.\nPedido: ' + orderId);
-    closeSheet();
-    showConfirmation();
   }
 
   function copyPix(){
@@ -564,7 +599,8 @@
     }
   }
 
-  function showConfirmation(){
+  // legacy visual confirmation (optional)
+  function showConfirmationLocal(codigo){
     const conf = document.createElement('div');
     conf.style.position='fixed';
     conf.style.left='50%';
@@ -575,15 +611,17 @@
     conf.style.padding='18px';
     conf.style.borderRadius='12px';
     conf.style.boxShadow='0 12px 40px rgba(0,0,0,0.3)';
-    conf.innerHTML = '<strong>Compra confirmada!</strong><div style="margin-top:8px">Pedido: ' + orderId + '</div><div style="margin-top:12px;text-align:center"><button style="padding:8px 12px;border-radius:8px;border:none;background:#007aff;color:#fff;font-weight:700" onclick="this.parentNode.parentNode.remove()">Fechar</button></div>';
+    conf.innerHTML = '<strong>Compra confirmada!</strong><div style="margin-top:8px">Pedido: ' + codigo + '</div><div style="margin-top:12px;text-align:center"><button style="padding:8px 12px;border-radius:8px;border:none;background:#007aff;color:#fff;font-weight:700" onclick="this.parentNode.parentNode.remove()">Fechar</button></div>';
     document.body.appendChild(conf);
   }
 
   // initialize
   (function init(){
     const btn = document.getElementById('payBtn');
-    btn.disabled = true;
+    if(btn){
+      btn.disabled = true;
+    }
   })();
 </script>
 </body>
-</html>
+          </html>
