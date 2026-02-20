@@ -1,4 +1,5 @@
-<!DOCTYPE html>  <html lang="pt-br">  
+<!DOCTYPE html>  
+<html lang="pt-br">  
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,6 +10,16 @@
 
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL = "https://ttqetzagmjsjiibchsqo.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_SxV6az0prQtpuyP4VdstkQ_nP38A3rw";
+
+  window.supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+</script>
 
 <style>
   :root{
