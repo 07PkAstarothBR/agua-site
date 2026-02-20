@@ -15,7 +15,13 @@
     --card-shadow: 0 18px 40px rgba(3,13,26,0.08);
   }
   *{box-sizing:border-box}
-  html,body{height:100%}
+  html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  display:flex;
+  overflow-y:auto;
+  }
   body{
     margin:0;
     font-family:'Poppins',system-ui,Segoe UI,Roboto,Helvetica,Arial;
