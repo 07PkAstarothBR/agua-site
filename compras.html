@@ -33,47 +33,44 @@
   }
 
   // finaliza e salva no Supabase usando os nomes de coluna que você criou
-  async function finalizarCompra(tipoPagamento, valorFinal) {
+async function finalizarCompra(tipoPagamento, valorFinal) {
+  const codigo = (window.orderId && String(window.orderId)) || (Math.floor(1000000 + Math.random() * 9000000).toString());
+  const qty = parseInt(document.getElementById('qty')?.value || window.quantidadeSelecionada || 1, 10);
 
-    // usa orderId já gerado se houver (consistência visual), senão cria novo
-    const codigo = (window.orderId && String(window.orderId)) || gerarCodigoPedido();
+  const pedido = {
+    codigo_pedido: codigo,
+    produto: "Galão Água Pura Premium 20L",
+    quantidade: qty,
+    valor_total: valorFinal,
+    forma_pagamento: tipoPagamento,
+    criado_em: new Date().toISOString()
+  };
 
-    const qty = parseInt(document.getElementById('qty')?.value || window.quantidadeSelecionada || 1, 10);
+  try { const overlay = document.getElementById('overlay'); if (overlay) overlay.style.display = 'none'; } catch(e){}
 
-    const pedido = {
-      codigo_pedido: codigo,
-      produto: "Galão Água Pura Premium 20L",
-      quantidade: qty,
-      valor_total: valorFinal,
-      forma_pagamento: tipoPagamento,
-      criado_em: new Date().toISOString()
-    };
-
-    // fecha o sheet se estiver aberto
-    try {
-      const overlay = document.getElementById('overlay');
-      if (overlay) overlay.style.display = 'none';
-    } catch (e) {}
-
-    // inserção no supabase
-    const { data, error } = await supabase
+  try {
+    const res = await supabase
       .from('pedidos')
       .insert([pedido]);
 
-    if (error) {
-      console.error("Erro ao salvar pedido:", error);
-      alert("Erro ao salvar pedido ❌ - veja console");
+    // DEBUG — imprime sempre o resultado no console
+    console.log("Supabase insert response:", res);
+
+    if (res.error) {
+      alert("Erro ao salvar pedido ❌: " + (res.error.message || JSON.stringify(res.error)));
       return false;
     }
 
-    // sucesso
     alert("Pedido salvo com sucesso ✅ Código: " + codigo);
-    // atualiza campo de código visual, se existir
     const codeEl = document.getElementById('orderCode');
     if (codeEl) codeEl.innerText = "Código do Pedido: " + codigo;
-
     return true;
+  } catch (err) {
+    console.error("Erro inesperado ao salvar pedido:", err);
+    alert("Erro inesperado ao salvar pedido. Veja console.");
+    return false;
   }
+}
 </script>
 
 <style>
