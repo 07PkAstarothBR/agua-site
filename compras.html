@@ -31,6 +31,8 @@
 
   // finaliza e salva no Supabase usando os nomes de coluna que você criou
 async function finalizarCompra(tipoPagamento, valorFinal) {
+  alert("Iniciando salvar pedido..."); // ✅ passo 1
+
   const codigo = (window.orderId && String(window.orderId)) || (Math.floor(1000000 + Math.random() * 9000000).toString());
   const qty = parseInt(document.getElementById('qty')?.value || window.quantidadeSelecionada || 1, 10);
 
@@ -43,18 +45,14 @@ async function finalizarCompra(tipoPagamento, valorFinal) {
     criado_em: new Date().toISOString()
   };
 
-  try { const overlay = document.getElementById('overlay'); if (overlay) overlay.style.display = 'none'; } catch(e){}
+  alert("Pedido que será enviado:\n" + JSON.stringify(pedido));
 
   try {
-    const res = await supabase
-      .from('pedidos')
-      .insert([pedido]);
-
-    // DEBUG — imprime sempre o resultado no console
-    console.log("Supabase insert response:", res);
+    const res = await supabase.from('pedidos').insert([pedido]);
+    alert("Resposta Supabase:\n" + JSON.stringify(res));
 
     if (res.error) {
-      alert("Erro ao salvar pedido ❌: " + (res.error.message || JSON.stringify(res.error)));
+      alert("Erro ao salvar pedido ❌\n" + (res.error.message || JSON.stringify(res.error)));
       return false;
     }
 
@@ -63,8 +61,7 @@ async function finalizarCompra(tipoPagamento, valorFinal) {
     if (codeEl) codeEl.innerText = "Código do Pedido: " + codigo;
     return true;
   } catch (err) {
-    console.error("Erro inesperado ao salvar pedido:", err);
-    alert("Erro inesperado ao salvar pedido. Veja console.");
+    alert("Erro inesperado ❌\n" + JSON.stringify(err));
     return false;
   }
 }
