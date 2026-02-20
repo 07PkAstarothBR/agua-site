@@ -1,251 +1,471 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Água Premium - Compra</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Comprar - Água Pura Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-body{
+  :root{
+    --bg1:#e6f7ff;
+    --accent:#00b894;
+    --primary:#007aff;
+    --glass: rgba(255,255,255,0.06);
+    --card-shadow: 0 18px 40px rgba(3,13,26,0.08);
+    --text-dark:#123;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;
-    background:linear-gradient(135deg,#e6f7ff,#ffffff);
+    font-family:'Poppins',system-ui,Segoe UI,Roboto,Helvetica,Arial;
+    -webkit-font-smoothing:antialiased;
+    background: linear-gradient(135deg,#0b2a3a,#062033);
+    color: #fff;
     display:flex;
     justify-content:center;
     padding:20px;
-}
+  }
 
-.container{
+  /* Page wrapper */
+  .wrap{
+    width:100%;
+    max-width:980px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border-radius:14px;
+    padding:28px;
+    box-shadow: var(--card-shadow);
+    overflow:hidden;
+  }
+
+  /* Layout: grid similar to e-commerce */
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:28px;
+    align-items:start;
+  }
+
+  /* Left column - image */
+  .left{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+  }
+  .product-photo{
     width:100%;
     max-width:420px;
-    background:white;
-    border-radius:25px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.1);
-    padding:25px;
-    animation:fade .4s ease;
-}
-
-@keyframes fade{
-    from{opacity:0;transform:translateY(20px);}
-    to{opacity:1;transform:translateY(0);}
-}
-
-img{
-    width:170px;
-    display:block;
-    margin:0 auto 15px;
-}
-
-h1{
-    text-align:center;
-    font-size:22px;
-    margin-bottom:5px;
-}
-
-.desc{
-    font-size:14px;
-    text-align:center;
-    color:#555;
-    margin-bottom:15px;
-}
-
-.features{
-    font-size:13px;
-    color:#444;
-    margin-bottom:20px;
-    line-height:1.6;
-}
-
-button{
-    width:100%;
-    padding:13px;
-    border:none;
-    border-radius:15px;
-    font-weight:bold;
-    margin-bottom:10px;
-    transition:.3s;
-}
-
-.select-btn{
-    background:#007aff;
-    color:white;
-    cursor:pointer;
-}
-
-.pay-btn{
-    background:#d0d7de;
-    color:white;
-    cursor:not-allowed;
-}
-
-.pay-btn.active{
-    background:#00b894;
-    cursor:pointer;
-}
-
-.overlay{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.5);
-}
-
-.modal{
-    display:none;
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:white;
-    border-radius:25px 25px 0 0;
-    padding:20px;
-    animation:slide .3s ease;
-}
-
-@keyframes slide{
-    from{transform:translateY(100%);}
-    to{transform:translateY(0);}
-}
-
-.option{
-    padding:12px;
-    border:1px solid #ddd;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
     border-radius:12px;
-    margin-bottom:10px;
-    text-align:center;
-    cursor:pointer;
-    font-weight:500;
-}
+    padding:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .product-photo img{
+    width:280px;
+    max-width:86%;
+    height:auto;
+    display:block;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+    transform: translateY(0);
+    transition: transform .8s ease;
+  }
+  .product-photo img.float{ animation: float 5s ease-in-out infinite; }
+  @keyframes float { 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
 
-.form input{
+  /* Right column - info */
+  .right{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .title{
+    font-size:22px;
+    font-weight:800;
+    line-height:1.05;
+    color: #e8fbff;
+    margin-bottom:6px;
+  }
+  .stars{
+    color:#ffd166;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .reviews{
+    font-size:13px;
+    color:#cfeff6;
+    margin-bottom:8px;
+  }
+  .price-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:8px 0 6px 0;
+  }
+  .price{
+    font-size:28px;
+    font-weight:900;
+    color: #00e0ff;
+  }
+  .shipping{
+    font-size:14px;
+    color:#dff9ff;
+  }
+  .payments{
+    font-size:14px;
+    color:#dff9ff;
+    margin-top:12px;
+    line-height:1.5;
+  }
+
+  /* Selection / cart area */
+  .cart-actions{
+    margin-top:20px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .qty{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .qty input{
+    width:72px;
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    text-align:center;
+    font-weight:700;
+    background: rgba(255,255,255,0.04);
+    color:#fff;
+  }
+  .btn-select{
+    padding:12px 18px;
+    border-radius:12px;
+    background:var(--primary);
+    color:#fff;
+    border: none;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn-pay{
+    flex:1;
+    padding:12px 16px;
+    border-radius:12px;
+    background: #6b7280; /* disabled look */
+    color:#fff;
+    border:none;
+    font-weight:800;
+    cursor:not-allowed;
+  }
+  .btn-pay.active{
+    background:var(--accent);
+    cursor:pointer;
+    box-shadow: 0 10px 30px rgba(0,184,148,0.14);
+  }
+
+  /* Details section (like Mercado Livre) */
+  .details{
+    margin-top:22px;
+    background: rgba(255,255,255,0.02);
+    padding:18px;
+    border-radius:12px;
+  }
+  .details h3{
+    margin:0 0 10px 0;
+    color:#aef0ff;
+    font-size:16px;
+  }
+  .details p{ color:#dff9ff; font-size:14px; line-height:1.6; margin:0 0 10px 0;}
+  .specs p{ color:#e6fbff; font-size:14px; margin:6px 0; }
+
+  /* Modal and overlay */
+  .overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    z-index:60;
+    justify-content:center;
+    align-items:flex-end;
+  }
+  .sheet{
+    width:100%;
+    max-width:440px;
+    background:linear-gradient(180deg,#04232f,#01303a);
+    color:#fff;
+    border-radius:14px 14px 0 0;
+    padding:18px;
+    box-shadow:0 -18px 50px rgba(0,0,0,0.6);
+  }
+  .sheet h4{ margin:0 0 14px 0; font-size:18px; }
+  .pay-option{
+    background: rgba(255,255,255,0.03);
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .pay-option:hover{ transform:translateY(-2px) }
+  .pay-option .label{ font-weight:700; color:#eaffff; }
+  .pay-detail{ font-size:13px; color:#cfeff6; }
+
+  /* PIX box and card form */
+  .pix-box{
+    margin-top:12px;
+    background:linear-gradient(180deg,#eafcff,#dff8ff);
+    color:#03323a;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:800;
+  }
+  .card-form input{
     width:100%;
     padding:10px;
-    margin-bottom:8px;
-    border-radius:10px;
-    border:1px solid #ccc;
-}
+    margin-top:8px;
+    border-radius:8px;
+    border:none;
+    background: rgba(255,255,255,0.06);
+    color:#fff;
+  }
 
-.pix-box{
-    background:#f1f1f1;
-    padding:15px;
-    border-radius:12px;
-    text-align:center;
-    font-weight:bold;
-    margin-top:10px;
-}
-
-.close{
-    margin-top:10px;
-    text-align:center;
-    font-size:14px;
-    color:#007aff;
-    cursor:pointer;
-}
+  /* responsive */
+  @media (max-width:900px){
+    .grid{ grid-template-columns: 1fr; }
+    .left{ order:0 }
+    .right{ order:1 }
+    .wrap{ padding:16px; }
+    body{ padding:12px; }
+  }
 </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="grid" role="main">
 
-<div class="container">
+      <!-- LEFT: product photo centered between name and reviews per your request -->
+      <div class="left" aria-hidden="false">
+        <div style="text-align:center">
+          <div class="title" style="font-size:20px;font-weight:800;color:#e8fbff;">Galão de Água Mineral 20L Premium</div>
+        </div>
 
-    <!-- FOTO PNG GALÃO GENÉRICO -->
-    <img src="https://pngimg.com/uploads/water_bottle/water_bottle_PNG9897.png" alt="Galão 20L">
+        <!-- image exactly between name and reviews -->
+        <div class="product-photo" aria-hidden="false">
+          <!-- stable PNG generic galão for testing -->
+          <img src="https://pngimg.com/uploads/water_bottle/water_bottle_PNG9897.png" alt="Galão 20L Água Premium" class="float">
+        </div>
 
-    <h1>Galão 20L Água Premium</h1>
+        <div style="text-align:center">
+          <div class="stars">★★★★★</div>
+          <div class="reviews">(247 avaliações verificadas)</div>
+        </div>
+      </div>
 
-    <div class="desc">
-        Água mineral pura, filtrada e certificada.
-        Entrega rápida em Itaboraí e região.
+      <!-- RIGHT: product info -->
+      <div class="right" role="region" aria-label="Informações do produto">
+        <div class="price-row">
+          <div class="price">R$ 22,90</div>
+        </div>
+
+        <div class="shipping">Frete <strong style="color:#7ef5c7">GRÁTIS</strong> para Marambaia - Itaboraí RJ</div>
+
+        <div class="payments"><strong>Formas de pagamento:</strong> Pix • Cartão de Débito • Cartão de Crédito (taxa R$ 1,00 por compra no crédito)</div>
+
+        <!-- Cart area -->
+        <div class="cart-actions" style="margin-top:18px;">
+          <div style="flex:1">
+            <label style="font-size:13px;color:#dff9ff;display:block;margin-bottom:6px">Quantidade</label>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="qty">
+                <input id="qty" type="number" value="1" min="1" max="100" onchange="qtyChanged()" />
+              </div>
+            </div>
+          </div>
+
+          <div style="min-width:140px">
+            <button class="btn-select" onclick="selectProduct()">Selecionar Produto</button>
+          </div>
+        </div>
+
+        <button id="payBtn" class="btn-pay" disabled>Pagar Agora</button>
+
+        <!-- Details like Mercado Livre -->
+        <div class="details" aria-labelledby="details-title">
+          <h3 id="details-title">Descrição</h3>
+          <p>Água mineral natural de alta pureza, distribuída em galões lacrados e higienizados. Ideal para casa, comércio ou escritório. Entrega rápida e segura em Itaboraí.</p>
+
+          <h3 style="margin-top:12px">Características</h3>
+          <div class="specs">
+            <p><strong>Marca:</strong> Água Pura Premium</p>
+            <p><strong>Modelo:</strong> Galão Mineral 20L Lacrado</p>
+            <p><strong>Capacidade:</strong> 20 Litros</p>
+            <p><strong>Tipo:</strong> Água Mineral Natural</p>
+            <p><strong>Entrega:</strong> Até 40 minutos (dependendo da região)</p>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 
-    <div class="features">
-        • Capacidade: 20 Litros<br>
-        • Lacrado e higienizado<br>
-        • Ideal para residências e empresas<br>
-        • Entrega no mesmo dia
+  <!-- Overlay / sheet -->
+  <div id="overlay" class="overlay" role="dialog" aria-hidden="true" onclick="closeSheet()">
+    <div class="sheet" role="document" onclick="event.stopPropagation()">
+      <h4>Escolha a forma de pagamento</h4>
+
+      <div class="pay-option" onclick="selectPayment('pix')">
+        <div class="label">Pix</div>
+        <div class="pay-detail">Pagar via chave Pix</div>
+      </div>
+
+      <div class="pay-option" onclick="selectPayment('debit')">
+        <div class="label">Cartão de Débito</div>
+        <div class="pay-detail">Pagamento à vista</div>
+      </div>
+
+      <div class="pay-option" onclick="selectPayment('credit')">
+        <div class="label">Cartão de Crédito</div>
+        <div class="pay-detail">Taxa R$ 1,00 aplicada</div>
+      </div>
+
+      <div id="paymentArea"></div>
+
+      <div style="margin-top:14px; text-align:center;">
+        <button style="padding:10px 16px;border-radius:10px;border:none;background:transparent;color:#aef0ff" onclick="closeSheet()">Cancelar</button>
+      </div>
     </div>
-
-    <!-- CARRINHO -->
-    <button class="select-btn" onclick="selectProduct()">Selecionar Produto</button>
-    <button id="payBtn" class="pay-btn" disabled>Pagar Agora</button>
-
-</div>
-
-<!-- OVERLAY -->
-<div id="overlay" class="overlay" onclick="closeModal()"></div>
-
-<!-- MODAL -->
-<div id="modal" class="modal">
-
-    <h3>Forma de pagamento</h3>
-
-    <div class="option" onclick="showPix()">Pix</div>
-    <div class="option" onclick="showDebit()">Cartão de Débito</div>
-    <div class="option" onclick="showCredit()">Cartão de Crédito</div>
-
-    <div id="paymentArea"></div>
-
-    <div class="close" onclick="closeModal()">Fechar</div>
-
-</div>
+  </div>
 
 <script>
+  // state
+  let productSelected = false;
+  let currentPayment = null;
 
-let selected = false;
+  function selectProduct(){
+    productSelected = true;
+    const payBtn = document.getElementById('payBtn');
+    payBtn.disabled = false;
+    payBtn.classList.add('active');
+    // bind to open modal
+    payBtn.onclick = openSheet;
+    // visual feedback
+    payBtn.innerText = 'Pagar Agora';
+  }
 
-function selectProduct(){
-    selected = true;
-    const btn = document.getElementById("payBtn");
-    btn.classList.add("active");
-    btn.disabled = false;
-    btn.onclick = openModal;
-}
+  function qtyChanged(){
+    const qty = parseInt(document.getElementById('qty').value || 1, 10);
+    // if qty >=6, we could show additional UI (parceling) — handled if needed
+    // keep consistent: parceling logic not mandatory here
+  }
 
-function openModal(){
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("modal").style.display = "block";
-}
+  function openSheet(){
+    if(!productSelected) return;
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden','false');
+    // clear previous payment area
+    document.getElementById('paymentArea').innerHTML = '';
+  }
 
-function closeModal(){
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("modal").style.display = "none";
-    document.getElementById("paymentArea").innerHTML = "";
-}
+  function closeSheet(){
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden','true');
+    currentPayment = null;
+  }
 
-function showPix(){
-    document.getElementById("paymentArea").innerHTML = `
-        <div class="pix-box">
-            Código Pix:<br><br>
-            202.978.417-69
+  function selectPayment(type){
+    currentPayment = type;
+    const area = document.getElementById('paymentArea');
+    area.innerHTML = ''; // clear
+
+    if(type === 'pix'){
+      // show pix key box and copy button
+      area.innerHTML = `
+        <div class="pix-box" id="pixBox">
+          Pague via Pix usando a chave abaixo:
+          <div style="margin-top:8px;font-size:18px">202.978.417-69</div>
+          <div style="margin-top:10px">
+            <button style="padding:8px 12px;border-radius:8px;border:none;background:#007aff;color:#fff;font-weight:700" onclick="copyPix()">Copiar Código</button>
+          </div>
         </div>
-    `;
-}
-
-function showDebit(){
-    document.getElementById("paymentArea").innerHTML = `
-        <div class="form">
-            <input placeholder="Número do Cartão">
-            <input placeholder="Validade (MM/AA)">
-            <input placeholder="Código de Segurança">
-            <input placeholder="Nome do Titular">
+      `;
+      // (simulation) automatically show a "Pagamento confirmado" message? Per your request, we only show code.
+    } else {
+      // card form (same for debit/credit)
+      let extraNote = '';
+      if(type === 'credit') extraNote = '<div style="color:#cfeff6;margin-bottom:8px">Taxa de R$ 1,00 será aplicada</div>';
+      area.innerHTML = `
+        ${extraNote}
+        <div class="card-form">
+          <input id="cardNumber" placeholder="Número do cartão (somente visual)">
+          <input id="cardName" placeholder="Nome do titular">
+          <div style="display:flex;gap:8px;">
+            <input id="cardExp" placeholder="MM/AA" style="flex:1">
+            <input id="cardCvc" placeholder="CVC" style="width:110px">
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;">
+            <button style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700" onclick="simulateCardPay()">Confirmar Pagamento</button>
+          </div>
         </div>
-    `;
-}
+      `;
+    }
+  }
 
-function showCredit(){
-    document.getElementById("paymentArea").innerHTML = `
-        <div class="form">
-            <input placeholder="Número do Cartão">
-            <input placeholder="Validade (MM/AA)">
-            <input placeholder="Código de Segurança">
-            <input placeholder="Nome do Titular">
-        </div>
-    `;
-}
+  function copyPix(){
+    const key = '202.978.417-69';
+    // use clipboard API (works on secure origins)
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(key).then(()=> {
+        alert('Chave Pix copiada: ' + key + '\n(Pague e volte aqui para confirmar)');
+      }).catch(()=> {
+        alert('Não foi possível copiar automaticamente. Use: ' + key);
+      });
+    } else {
+      alert('Use: ' + key);
+    }
+  }
 
+  function simulateCardPay(){
+    // purely visual simulation
+    alert('Pagamento simulado via cartão realizado com sucesso!');
+    closeSheet();
+    // Here you could show an order confirmation screen or modal
+    showConfirmation();
+  }
+
+  function showConfirmation(){
+    // minimal confirmation (visual)
+    const conf = document.createElement('div');
+    conf.style.position='fixed';
+    conf.style.left='50%';
+    conf.style.top='50%';
+    conf.style.transform='translate(-50%,-50%)';
+    conf.style.background='linear-gradient(180deg,#eafff6,#d6fff0)';
+    conf.style.color='#023';
+    conf.style.padding='20px';
+    conf.style.borderRadius='12px';
+    conf.style.boxShadow='0 12px 40px rgba(0,0,0,0.3)';
+    conf.innerHTML = '<strong>Compra confirmada!</strong><div style="margin-top:8px">Seu pedido foi registrado. Código de entrega será gerado no processamento.</div><div style="margin-top:12px;text-align:center"><button style="padding:8px 12px;border-radius:8px;border:none;background:#007aff;color:#fff;font-weight:700" onclick="this.parentNode.parentNode.remove()">Fechar</button></div>';
+    document.body.appendChild(conf);
+  }
+
+  // ensure pay button initial disabled state
+  (function init(){
+    const btn = document.getElementById('payBtn');
+    btn.disabled = true;
+  })();
 </script>
-
 </body>
 </html>
