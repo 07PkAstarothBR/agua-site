@@ -3,246 +3,248 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comprar - Água Pura Premium</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<title>Água Premium - Compra</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
-background: radial-gradient(circle at top left,#0a192f,#001f3f,#000814);
-color:white;
-padding:60px 8%;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;
+    background:linear-gradient(135deg,#e6f7ff,#ffffff);
+    display:flex;
+    justify-content:center;
+    padding:20px;
 }
 
-.container{display:flex;flex-wrap:wrap;gap:60px;align-items:center;}
+.container{
+    width:100%;
+    max-width:420px;
+    background:white;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.1);
+    padding:25px;
+    animation:fade .4s ease;
+}
 
-.product-info{
-flex:1;
-background:rgba(255,255,255,0.05);
-padding:40px;
-border-radius:25px;
-backdrop-filter:blur(20px);
+@keyframes fade{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+img{
+    width:170px;
+    display:block;
+    margin:0 auto 15px;
 }
 
 h1{
-font-size:34px;
-font-weight:900;
-background:linear-gradient(90deg,#fff,#00eaff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-margin-bottom:20px;
+    text-align:center;
+    font-size:22px;
+    margin-bottom:5px;
 }
 
-.galao-img{
-text-align:center;
-margin:20px 0;
+.desc{
+    font-size:14px;
+    text-align:center;
+    color:#555;
+    margin-bottom:15px;
 }
 
-.galao-img img{
-width:220px;
-filter:drop-shadow(0 30px 60px rgba(0,234,255,0.5));
+.features{
+    font-size:13px;
+    color:#444;
+    margin-bottom:20px;
+    line-height:1.6;
 }
 
-.stars{color:#ffd700;margin-top:10px;}
-.reviews-count{font-size:13px;color:#bdefff;margin-bottom:20px;}
-
-.price{
-font-size:40px;
-font-weight:900;
-color:#00eaff;
-margin:10px 0;
+button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:15px;
+    font-weight:bold;
+    margin-bottom:10px;
+    transition:.3s;
 }
 
-.shipping{margin:10px 0;}
-.shipping span{color:#00ff99;font-weight:700;}
-
-.payments{margin-top:10px;font-size:14px;line-height:1.8;color:#dff9ff;}
-
-.quantity{margin:20px 0;}
-.quantity input{
-width:70px;
-padding:10px;
-border-radius:10px;
-border:none;
-text-align:center;
-font-size:16px;
+.select-btn{
+    background:#007aff;
+    color:white;
+    cursor:pointer;
 }
 
-.installments{
-margin-top:10px;
-font-size:14px;
-color:#00ffcc;
-display:none;
+.pay-btn{
+    background:#d0d7de;
+    color:white;
+    cursor:not-allowed;
 }
 
-.buy-btn{
-margin-top:25px;
-width:100%;
-padding:16px;
-border:none;
-border-radius:40px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-background:white;
-color:#003f5c;
-transition:0.3s;
+.pay-btn.active{
+    background:#00b894;
+    cursor:pointer;
 }
 
-.buy-btn:hover{
-background:#00eaff;
-color:white;
-transform:scale(1.05);
-box-shadow:0 0 25px #00eaff;
+.overlay{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
 }
 
-/* MODAL */
 .modal{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.8);
-justify-content:center;
-align-items:center;
+    display:none;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:white;
+    border-radius:25px 25px 0 0;
+    padding:20px;
+    animation:slide .3s ease;
 }
 
-.modal-content{
-background:#001f3f;
-padding:30px;
-border-radius:20px;
-width:90%;
-max-width:400px;
-text-align:center;
+@keyframes slide{
+    from{transform:translateY(100%);}
+    to{transform:translateY(0);}
 }
 
-.modal-content input{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:8px;
-border:none;
+.option{
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    margin-bottom:10px;
+    text-align:center;
+    cursor:pointer;
+    font-weight:500;
+}
+
+.form input{
+    width:100%;
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+.pix-box{
+    background:#f1f1f1;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:bold;
+    margin-top:10px;
 }
 
 .close{
-margin-top:10px;
-cursor:pointer;
-color:#00eaff;
-font-size:14px;
+    margin-top:10px;
+    text-align:center;
+    font-size:14px;
+    color:#007aff;
+    cursor:pointer;
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<div class="product-info">
+    <!-- FOTO PNG GALÃO GENÉRICO -->
+    <img src="https://pngimg.com/uploads/water_bottle/water_bottle_PNG9897.png" alt="Galão 20L">
 
-<h1>Galão de Água Mineral 20L Premium</h1>
+    <h1>Galão 20L Água Premium</h1>
 
-<div class="galao-img">
-<img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80">
-</div>
+    <div class="desc">
+        Água mineral pura, filtrada e certificada.
+        Entrega rápida em Itaboraí e região.
+    </div>
 
-<div class="stars">★★★★★</div>
-<div class="reviews-count">(247 avaliações verificadas)</div>
+    <div class="features">
+        • Capacidade: 20 Litros<br>
+        • Lacrado e higienizado<br>
+        • Ideal para residências e empresas<br>
+        • Entrega no mesmo dia
+    </div>
 
-<div class="price">R$ 22,90</div>
-
-<div class="shipping">
-<span>Frete GRÁTIS</span> para Marambaia - Itaboraí RJ
-</div>
-
-<div class="payments">
-<strong>Pagamento:</strong><br>
-• Pix<br>
-• Crédito (taxa R$ 1,00)<br>
-• Débito
-</div>
-
-<div class="quantity">
-Quantidade:
-<input type="number" id="qty" value="1" min="1" max="100" onchange="checkInstallments()">
-</div>
-
-<div class="installments" id="installments">
-Parcelamento disponível: até 2x sem juros
-</div>
-
-<button class="buy-btn" onclick="openPayment()">Comprar Agora</button>
+    <!-- CARRINHO -->
+    <button class="select-btn" onclick="selectProduct()">Selecionar Produto</button>
+    <button id="payBtn" class="pay-btn" disabled>Pagar Agora</button>
 
 </div>
 
-</div>
+<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="closeModal()"></div>
 
-<!-- MODAL PAGAMENTO -->
-<div class="modal" id="paymentModal">
-<div class="modal-content">
-<h3>Escolha a forma de pagamento</h3>
-<br>
-<button onclick="showPix()">Pix</button>
-<button onclick="showCard()">Cartão</button>
-<div class="close" onclick="closeModal()">Fechar</div>
-</div>
-</div>
+<!-- MODAL -->
+<div id="modal" class="modal">
 
-<!-- MODAL PIX -->
-<div class="modal" id="pixModal">
-<div class="modal-content">
-<h3>Pagamento via Pix</h3>
-<p>Chave Pix:</p>
-<h2>202.978.417-69</h2>
-<p>Após pagamento a compra será confirmada automaticamente.</p>
-<div class="close" onclick="closeModal()">Fechar</div>
-</div>
-</div>
+    <h3>Forma de pagamento</h3>
 
-<!-- MODAL CARTÃO -->
-<div class="modal" id="cardModal">
-<div class="modal-content">
-<h3>Pagamento com Cartão</h3>
-<input placeholder="Número do Cartão">
-<input placeholder="Nome do Titular">
-<input placeholder="Nome no Cartão">
-<input placeholder="Data de Vencimento">
-<input placeholder="Código de Segurança">
-<button onclick="alert('Pagamento simulado com sucesso!')">Confirmar Pagamento</button>
-<div class="close" onclick="closeModal()">Fechar</div>
-</div>
+    <div class="option" onclick="showPix()">Pix</div>
+    <div class="option" onclick="showDebit()">Cartão de Débito</div>
+    <div class="option" onclick="showCredit()">Cartão de Crédito</div>
+
+    <div id="paymentArea"></div>
+
+    <div class="close" onclick="closeModal()">Fechar</div>
+
 </div>
 
 <script>
-function checkInstallments(){
-let qty=document.getElementById("qty").value;
-let inst=document.getElementById("installments");
-if(qty>=6){
-inst.style.display="block";
-}else{
-inst.style.display="none";
-}
+
+let selected = false;
+
+function selectProduct(){
+    selected = true;
+    const btn = document.getElementById("payBtn");
+    btn.classList.add("active");
+    btn.disabled = false;
+    btn.onclick = openModal;
 }
 
-function openPayment(){
-document.getElementById("paymentModal").style.display="flex";
-}
-
-function showPix(){
-closeModal();
-document.getElementById("pixModal").style.display="flex";
-}
-
-function showCard(){
-closeModal();
-document.getElementById("cardModal").style.display="flex";
+function openModal(){
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("modal").style.display = "block";
 }
 
 function closeModal(){
-document.getElementById("paymentModal").style.display="none";
-document.getElementById("pixModal").style.display="none";
-document.getElementById("cardModal").style.display="none";
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("paymentArea").innerHTML = "";
 }
+
+function showPix(){
+    document.getElementById("paymentArea").innerHTML = `
+        <div class="pix-box">
+            Código Pix:<br><br>
+            202.978.417-69
+        </div>
+    `;
+}
+
+function showDebit(){
+    document.getElementById("paymentArea").innerHTML = `
+        <div class="form">
+            <input placeholder="Número do Cartão">
+            <input placeholder="Validade (MM/AA)">
+            <input placeholder="Código de Segurança">
+            <input placeholder="Nome do Titular">
+        </div>
+    `;
+}
+
+function showCredit(){
+    document.getElementById("paymentArea").innerHTML = `
+        <div class="form">
+            <input placeholder="Número do Cartão">
+            <input placeholder="Validade (MM/AA)">
+            <input placeholder="Código de Segurança">
+            <input placeholder="Nome do Titular">
+        </div>
+    `;
+}
+
 </script>
 
 </body>
